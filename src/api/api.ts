@@ -8,12 +8,12 @@ const apiClient = axios.create({
    }
 });
 
-export const getCharacters = (page: number, name: string, status: string): Promise<AxiosResponse<CharacterResponse>> => {
+export const getCharacters = async (page: number, name: string, status: string): Promise<AxiosResponse<CharacterResponse>> => {
    try {
-      const response = apiClient.get<CharacterResponse>('/character', { params: { page, name, status } });
+      const response = await apiClient.get<CharacterResponse>('/character', { params: { page, name, status } });
       return response;
    } catch (error) {
       console.error('Error fetching characters:', error);
-      throw error;
+      return Promise.reject(error);
    }
 };
